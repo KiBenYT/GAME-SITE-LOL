@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Jogos</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #121214;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Barra Superior */
+    header {
+      background-color: #202024;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #29292e;
+    }
+
+    .lista-jogos {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    /* Botões dos Jogos */
+    .btn-jogo {
+      background-color: #29292e;
+      color: #e1e1e6;
+      border: 1px solid #323238;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .btn-jogo:hover {
+      background-color: #00875f;
+      color: #fff;
+    }
+
+    /* Botões de Ação (Tela Cheia e Fechar) */
+    .controles {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background-color: #323238;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-action:hover {
+      background-color: #7c5cacc9;
+    }
+
+    .btn-fechar {
+      background-color: #f75a68;
+    }
+
+    .btn-fechar:hover {
+      background-color: #c53030;
+    }
+
+    /* Área do Iframe */
+    main {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #7c7c8a;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Área dos botões apontando para os teus arquivos HTML locais -->
+    <div class="lista-jogos">
+      <!-- Exemplo: se o arquivo do FNF estiver numa pasta chamada 'jogos' ou na raiz -->
+      <button class="btn-jogo" onclick="abrirJogo('fnf.html')">Friday Night Funkin</button>
+      <button class="btn-jogo" onclick="abrirJogo('doki/index.html')">Doki Doki</button>
+      <button class="btn-jogo" onclick="abrirJogo('subway.html')">Subway Surfers</button>
+    </div>
+
+    <!-- Controles da Janela -->
+    <div class="controles">
+      <button class="btn-action" onclick="toggleFullscreen()">fullscreen ⛶</button>
+      <button class="btn-action btn-fechar" onclick="fecharJogo()">Fechar ✕</button>
+    </div>
+  </header>
+
+  <main id="tela">
+    <div class="placeholder">Selecione um jogo acima para começar</div>
+    <iframe id="game-frame" src="" style="display: none;" allow="autoplay; fullscreen; encrypted-media; microphone; gamepad" allowfullscreen></iframe>
+  </main>
+
+  <script>
+    function abrirJogo(caminhoArquivo) {
+      const frame = document.getElementById('game-frame');
+      const placeholder = document.querySelector('.placeholder');
+      
+      frame.src = caminhoArquivo;
+      frame.style.display = 'block';
+      if (placeholder) placeholder.style.display = 'none';
+    }
+
+    function fecharJogo() {
+      const frame = document.getElementById('game-frame');
+      const placeholder = document.querySelector('.placeholder');
+      
+      frame.src = '';
+      frame.style.display = 'none';
+      if (placeholder) placeholder.style.display = 'flex';
+    }
+
+    function toggleFullscreen() {
+      const elem = document.getElementById('tela');
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          alert(`Erro ao tentar tela cheia: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  </script>
+
+</body>
+</html>
